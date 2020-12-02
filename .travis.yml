@@ -6,12 +6,11 @@ before_script:
   - sudo apt install -y cmake tree
   - pyenv global 3.7.1
   - pip3 install requests boto3
-  - export PATH=$PATH:$HOME/build/xcalibyte-github/redis/bin
 # install xcal client
   - wget -q https://ci-integration.oss-cn-shanghai.aliyuncs.com/xcal-agent.tgz && tar -xf xcal-agent.tgz -C $HOME/build && cd $HOME/build/xcal-agent/xcalbuild/linux/bear && sudo rm -rf build && mkdir build && cd build && cmake .. && make && sudo make install
   - export PYTHONPATH=$HOME/build/xcal-agent/agent:$HOME/build/xcal-agent/agent/commondef/src
 # install submit task
-  - wget -q https://ci-integration.oss-cn-shanghai.aliyuncs.com/submit_task.tgz && tar -zxvf submit_task.tgz -C $HOME/build/xcalibyte-github/redis && cd $HOME/build/xcalibyte-github/redis/install && . ./install_submit_task.sh && . ./set_path.sh
+  - wget -q https://ci-integration.oss-cn-shanghai.aliyuncs.com/submit_task.tgz && tar -zxvf submit_task.tgz -C $HOME/build/xcalibyte-github/redis && cd $HOME/build/xcalibyte-github/redis/install && . ./set_path.sh
 
 env:
   - USER_ID='xcalibyte-github'
@@ -24,4 +23,4 @@ script:
 
 after_success:
   - tree .xcalagent
-  - cd "$(dirname "$(find . -type f -name xcal-task.conf | head -1)")" && before_submit.sh && ls && cat xcal-task.conf && submit_task.sh xcal-task.conf
+  - cd "$(dirname "$(find . -type f -name xcal-task.conf | head -1)")" && ls && cat xcal-task.conf && submit_task.sh xcal-task.conf
